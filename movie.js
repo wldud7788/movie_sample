@@ -52,7 +52,7 @@ getMovieData();
 // 서치 함수, 버튼 클릭 이벤트 쪽에서 onclick시 실행되도록 처리 
 function search() {
   let text = document.getElementsByClassName('searchInput');
-  console.log("??".text);
+  getMovieData(text);
 };
 
 let searchBtn = document.getElementById('search_btn');
