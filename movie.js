@@ -5,18 +5,23 @@ const options = {
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjJlOWIyZWNkMmI1MDIwN2YzMWU2NzFhMDU3NzRmNSIsIm5iZiI6MTcyMTkxNjYxOC43MTM4NTgsInN1YiI6IjY2YTI1YWMxY2EyMzA4N2I0YWNmODgwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.k8F1VMfOMPodILUqqlXGQXrOEgkbQGiJ8w_vnWFM_nE'
   }
 };
-function getMovieData(serchText) {
+
+function getMovieData(searchText) {
+  console.log("sss",searchText);
   let url = "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
   // 검색어가 있을 경우에는 검색 관련 url을 붙여준다.
-  if(serchText) {
-    url = `https://developer.themoviedb.org/reference/search-movie?query=${searchText}`;
+  
+  if(searchText) {
+    url = `https://api.themoviedb.org/3/search/movie?query=${searchText}`;
+    // https://developer.themoviedb.org/reference/search-movie?query=
+    // https://api.themoviedb.org/3/search/movie?query=
   }
   //원래 그려져 있던 부모 컨테이너를 한 번 지워준다.
   let parentHtml = document.getElementById('movie-container');
   parentHtml.innerHTML = '';
-
+  console.log("url부분",url);
   // fetch를 통한 데이터 가져오기 + 카드 그려주는 로직 
-  fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',options).then((response) => {
+  fetch(url, options).then((response) => {
     response.json()
     .then(response => {
       let movie_list = response['results'];
@@ -51,13 +56,13 @@ function getMovieData(serchText) {
 getMovieData();
 // 서치 함수, 버튼 클릭 이벤트 쪽에서 onclick시 실행되도록 처리 
 function search() {
-  let text = document.getElementsByClassName('searchInput');
+  let text = document.getElementById('searchInput').value;
   getMovieData(text);
 };
 
 let searchBtn = document.getElementById('search_btn');
 searchBtn.onclick = () => {
   search();
-};
+}
 
 
